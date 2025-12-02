@@ -15,35 +15,37 @@ max_benchmark_len=0
 days=()
 benchmarks=()
 
-for dir in day{01..12}; do
+for day in {01..12}; do
     cargo build -r 2> /dev/null
 
-    if [[ -d $dir ]]; then
+    if [[ -d day$day ]]; then
         benchmark=$(
-            hyperfine --shell none --input "$dir/input" "target/release/$dir" 2> /dev/null \
+            hyperfine --shell none --input "day$day/input" "target/release/day$day" 2> /dev/null \
 	    | grep -Po '\d.+±\s+[\d.]+\s+\S+'
         )
         if (( ${#benchmark} > max_benchmark_len )); then
             max_benchmark_len=${#benchmark}
         fi
-        days+=("$dir")
+        days+=("$day")
         benchmarks+=("$benchmark")
     fi
 done
 
-echo -n '| Day   | Benchmark '
+echo -n '| Day | Benchmark '
 for (( i = 9; i < max_benchmark_len; i += 1 )); do
     echo -n ' '
 done
 echo '|'
-echo -n '|-------|-----------'
+echo -n '|-----|-----------'
 for (( i = 9; i < max_benchmark_len; i += 1 )); do
     echo -n -
 done
 echo '|'
 
 for i in "${!days[@]}"; do
-    echo -n "| ${days[i]} | ${benchmarks[i]}"
+    echo -n '|  '
+    printf %2d "${days[i]}"
+    echo -n " | ${benchmarks[i]}"
     for (( j = ${#benchmarks[i]}; j <= max_benchmark_len; j += 1 )); do
         echo -n ' '
     done
