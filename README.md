@@ -5,13 +5,15 @@
 
 | Day | Benchmark           |
 |-----|---------------------|
-|   1 | 2.8 ms ±   0.3 ms   |
-|   2 | 405.3 ms ±   4.2 ms |
+|   1 | 3.0 ms ±   0.3 ms   |
+|   2 | 459.3 ms ±  74.3 ms |
+|   3 | 3.2 ms ±   0.4 ms   |
 
 ## Lines of code
 
 ```
   79 day01/src/main.rs
   72 day02/src/main.rs
- 151 total
+ 104 day03/src/main.rs
+ 255 total
 ```
